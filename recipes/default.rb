@@ -17,9 +17,16 @@
 # limitations under the License.
 #
 
-package "collectd" do
-  package_name "collectd-core"
-end
+package = value_for_platform(
+  ["centos", "redhat", "suse", "fedora" ] => {
+   "default" => "collectd"
+  },
+  ["ubuntu", "debian"] => {
+   "default" => "collectd-core"
+  },
+  "default" => "collectd"
+)
+package package
 
 service "collectd" do
   supports :restart => true, :status => true
