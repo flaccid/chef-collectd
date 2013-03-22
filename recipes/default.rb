@@ -32,13 +32,7 @@ service "collectd" do
   supports :restart => true, :status => true
 end
 
-directory "/etc/collectd" do
-  owner "root"
-  group "root"
-  mode "755"
-end
-
-directory "/etc/collectd/plugins" do
+directory node[:collectd][:config_dir] do
   owner "root"
   group "root"
   mode "755"
