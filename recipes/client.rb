@@ -19,6 +19,19 @@
 
 include_recipe "collectd"
 
+servers =
+  if !node[:collectd][:servers].empty?
+    node[:collectd][:servers]
+  elsif !Chef::Config[:solo]
+    search(:node, 'recipes:"collectd::server"').map {|n| n['fqdn'] }
+  end
+if servers.empty?
+  if Chef::Config[:solo]
+    raise "No collectd servers found. Please configure at least one server in Chef Solo with collectd['servers']."
+  else
+    raise "No collectd servers found. Please configure at least one server node using collectd::server." 
+end
+
 if node['collectd']['servers'] or Chef::Config[:solo]
   servers = node['collectd']['servers']
 else
