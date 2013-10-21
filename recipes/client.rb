@@ -29,20 +29,8 @@ if servers.empty?
   if Chef::Config[:solo]
     raise "No collectd servers found. Please configure at least one server in Chef Solo with collectd['servers']."
   else
-    raise "No collectd servers found. Please configure at least one server node using collectd::server." 
-end
-
-if node['collectd']['servers'] or Chef::Config[:solo]
-  servers = node['collectd']['servers']
-else
-  servers = []
-  search(:node, 'recipes:"collectd::server"') do |n|
-    servers << n['fqdn']
+    raise "No collectd servers found. Please configure at least one server node using collectd::server."
   end
-end
-
-if servers.empty?
-  raise "No servers found. Please configure at least one node with collectd::server."
 end
 
 collectd_plugin "network" do
