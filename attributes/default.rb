@@ -37,7 +37,7 @@ end
 default[:collectd][:types_db] = ["/usr/share/collectd/types.db"]
 default[:collectd][:interval] = 10
 default[:collectd][:read_threads] = 5
-default[:collectd][:fqdn_lookup] = "true"
+default[:collectd][:fqdn_lookup] = true
 default[:collectd][:hostname] = node[:fqdn]
 default[:collectd][:servers] = []
 
